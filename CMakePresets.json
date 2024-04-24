@@ -37,6 +37,19 @@
 				"lhs": "${hostSystemName}",
 				"rhs": "Linux"
 			}
+		},
+		{
+			"name": "linux-32",
+			"inherits": "defaults",
+			"generator": "Ninja Multi-Config",
+                        "cacheVariables": {
+                                "BITS": "-m32"
+                        },
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			}
 		}
 	],
 	"buildPresets": [
@@ -51,6 +64,10 @@
 		{
 			"name": "linux",
 			"configurePreset": "linux"
+		},
+		{
+			"name": "linux-32",
+			"configurePreset": "linux-32"
 		}
 	]
 }

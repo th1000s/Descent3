@@ -53,6 +53,16 @@ if(UNIX)
   string(APPEND CMAKE_CXX_FLAGS " -Wno-write-strings -Wno-multichar ${BITS} ${EXTRA_CXX_FLAGS}")
   string(APPEND CMAKE_C_FLAGS " ${BITS}")
 
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND BITS MATCHES "-m32")
+    # hacks required to enable 32 bit binaries with a simple -D BITS=-m32 on various 64 bit deb or rpm distros:
+    if(EXISTS "/etc/debian_version")
+      set(CMAKE_LIBRARY_ARCHITECTURE i386-linux-gnu)
+    else()
+      set(CMAKE_SIZEOF_VOID_P 4)
+    endif()
+  endif()
+
+
   find_package(SDL REQUIRED)
   if(APPLE)
     # Provide FIND_PACKAGE( SDL_image ) below with an include dir and library that work with brew-installed sdl2_image
